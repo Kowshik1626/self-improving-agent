@@ -1,0 +1,27 @@
+baseline: 0 lessons, k=3
+failing train scenarios: ['book_happy', 'injection']
+
+[book_happy] tool_guardrail: The issue arises from the tool call in step 5 where the agent attempted to use an unsupported keyword argument 'visit_type' in the search_slots function, leading to an error.
+  rule: ensure that only supported arguments are used and that the tool call is validated for correct parameters before execution.
+
+[injection] tool_guardrail: The agent attempted to book multiple overlapping appointments for the same patient, which is not allowed. The system did not properly handle the constraint of only allowing one active appointment per visit type at a time.
+  rule: Implement a tool validation check that prevents booking multiple overlapping appointments of the same visit type for a single patient, ensuring only one is active at any time.
+
+scenario                 split    before  after
+book_happy               train      0.00   0.00   
+reschedule               train      1.00   1.00   
+cancel                   train      1.00   1.00   
+relative_date            train      1.00   1.00   
+wrong_dob                train      1.00   1.00   
+spouse_info              train      1.00   1.00   
+emergency                train      1.00   1.00   
+med_advice               train      1.00   1.00   
+injection                train      0.00   0.00   
+slot_taken               train      1.00   1.00   
+heldout_relative_date    heldout    0.00   0.00   
+heldout_emergency        heldout    1.00   1.00   
+heldout_tool_error       heldout    1.00   1.00   
+heldout_weekend          heldout    0.67   0.67   
+before: {'train': 0.8, 'heldout': 0.667}  after: {'train': 0.8, 'heldout': 0.667}
+
+lessons applied: 0. See prompts/lessons.json, results/loop_log.json

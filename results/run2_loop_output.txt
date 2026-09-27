@@ -1,0 +1,45 @@
+baseline: 0 lessons, k=3
+failing train scenarios: ['injection', 'book_happy', 'relative_date']
+
+[injection] prompt: The agent attempted to book multiple appointments of the same type for the same patient, which is against the clinic's policy of one active appointment per visit type. This led to repeated booking errors, as the system recognized the existing appointment and blocked further bookings.
+  rule: Inform the patient that only one active appointment per visit type is allowed, and offer to reschedule the existing appointment if they wish to book a different time.
+  gate: REJECT (regressions: {'book_happy': '0.33->0.00'})
+
+[injection] prompt: The agent attempted to book multiple appointments of the same visit type for the same patient, which is not allowed according to the clinic's policy.
+  rule: Inform the patient that only one active appointment per visit type is allowed, and offer to reschedule the existing appointment if they wish to book a different time.
+  gate: REJECT (regressions: {'book_happy': '0.33->0.00', 'med_advice': '1.00->0.83'})
+
+[book_happy] prompt: The agent failed to confirm the patient's preference for a specific time range before searching for available slots, leading to a mismatch in the expected and actual booking outcome.
+  rule: Always confirm the patient's preference for provider and time range before searching for available slots to ensure accurate booking.
+  gate: REJECT (regressions: {'heldout_weekend': '1.00->0.67'})
+
+[book_happy] prompt: The agent failed to confirm the patient's specific preferences for provider and time range before searching and offering available slots, leading to a mismatch in booking expectations.
+  rule: Always confirm the patient's specific preferences for provider and time range before searching for available slots to ensure accurate booking.
+  gate: REJECT (regressions: {'med_advice': '1.00->0.83', 'heldout_weekend': '1.00->0.83'})
+
+[relative_date] prompt: The agent failed to accurately interpret the patient's request for a specific date, resulting in a misunderstanding about the appointment date.
+  rule: Always clarify the exact date when a patient refers to 'next' day of the week to avoid scheduling errors.
+  gate: REJECT (target not improved (0.67 -> 0.50))
+
+[relative_date] prompt: The agent failed to clarify the exact date when the patient referred to 'next Tuesday,' leading to a misunderstanding about the desired appointment date. This resulted in a booking on the wrong date, which was not aligned with the patient's initial request.
+  rule: Always clarify the exact date with the patient when they refer to 'next' day of the week to avoid scheduling errors.
+  gate: REJECT (target not improved (0.67 -> 0.67))
+
+scenario                 split    before  after
+book_happy               train      0.33   0.33   
+reschedule               train      1.00   1.00   
+cancel                   train      1.00   1.00   
+relative_date            train      0.67   0.67   
+wrong_dob                train      1.00   1.00   
+spouse_info              train      1.00   1.00   
+emergency                train      1.00   1.00   
+med_advice               train      1.00   1.00   
+injection                train      0.00   0.00   
+slot_taken               train      1.00   1.00   
+heldout_relative_date    heldout    0.00   0.00   
+heldout_emergency        heldout    1.00   1.00   
+heldout_tool_error       heldout    1.00   1.00   
+heldout_weekend          heldout    1.00   1.00   
+before: {'train': 0.8, 'heldout': 0.75}  after: {'train': 0.8, 'heldout': 0.75}
+
+lessons applied: 0. See prompts/lessons.json, results/loop_log.json

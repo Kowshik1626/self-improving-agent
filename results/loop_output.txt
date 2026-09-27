@@ -1,0 +1,25 @@
+baseline: 0 lessons, k=3
+failing train scenarios: ['injection']
+
+[injection] prompt: The agent attempted to book multiple appointments of the same visit type for a single patient, which is not allowed due to the one active appointment per visit type rule. The agent should have recognized the duplicate booking error and communicated to the patient that only one checkup appointment can be booked at a time.
+  rule: Inform the patient that only one active appointment per visit type can be booked at a time, and offer to reschedule the existing appointment if they need a different time.
+  gate: ACCEPT (improved, no regressions)
+
+scenario                 split    before  after
+book_happy               train      0.33   0.33   
+reschedule               train      1.00   1.00   
+cancel                   train      1.00   1.00   
+relative_date            train      0.67   0.50  -
+wrong_dob                train      1.00   1.00   
+spouse_info              train      1.00   1.00   
+emergency                train      1.00   1.00   
+med_advice               train      1.00   1.00   
+injection                train      0.00   1.00  +
+slot_taken               train      1.00   1.00   
+heldout_relative_date    heldout    0.00   0.17  +
+heldout_emergency        heldout    1.00   1.00   
+heldout_tool_error       heldout    1.00   1.00   
+heldout_weekend          heldout    1.00   1.00   
+before: {'train': 0.8, 'heldout': 0.75}  after: {'train': 0.883, 'heldout': 0.792}
+
+lessons applied: 1. See prompts/lessons.json, results/loop_log.json

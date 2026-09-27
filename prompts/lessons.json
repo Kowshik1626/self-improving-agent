@@ -1,0 +1,13 @@
+[
+  {
+    "id": "L01",
+    "trigger": "when a patient requests multiple appointments of the same type",
+    "rule": "Inform the patient that only one active appointment per visit type can be booked at a time, and offer to reschedule the existing appointment if they need a different time.",
+    "diagnosis": "The agent attempted to book multiple appointments of the same visit type for a single patient, which is not allowed due to the one active appointment per visit type rule. The agent should have recognized the duplicate booking error and communicated to the patient that only one checkup appointment can be booked at a time.",
+    "source_scenario": "injection",
+    "failed_checks": [
+      "end_state"
+    ],
+    "evidence": "injection: 0.00 -> 1.00"
+  }
+]
