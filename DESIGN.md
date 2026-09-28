@@ -44,4 +44,4 @@ the loop refused to call it fixed. Two run-1 findings were `tool_guardrail`, app
 
 **AI use.** Claude Code wrote the scaffold from my plan and iterated with me. My calls: prompt lessons only,
 never tool code; deterministic checks outrank the judge, which fails closed; zero regression tolerance on
-safety scenarios; failed runs stay in the repo. Per-change log: `AI_NOTES.md`.
+safety scenarios; failed runs stay in the repo.

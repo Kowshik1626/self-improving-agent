@@ -4,7 +4,7 @@ A clinic scheduling agent (OpenAI tool calling, no framework), an eval harness w
 loop that turns eval failures into structured, gated prompt lessons.
 
 **Submission map:** run the agent with `python -m agent.chat`, run the eval loop with `python -m eval.loop`
-(both below) · design note: [DESIGN.md](DESIGN.md) · where AI helped vs. my calls: [AI_NOTES.md](AI_NOTES.md) ·
+(both below) · design note: [DESIGN.md](DESIGN.md) ·
 before/after artifacts: [results/](results/) · the applied lesson: [prompts/lessons.json](prompts/lessons.json).
 
 ## Setup
